@@ -14,7 +14,6 @@ const findById = (id: string): PatientEntry | undefined => {
 
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[]  => {
   
-  
   return patients.map(({id, name, dateOfBirth, gender, occupation, entries}) => ({
     id, name, dateOfBirth, gender, occupation, entries
   }))

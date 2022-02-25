@@ -4,15 +4,18 @@ import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
 import { setPatient, useStateValue } from "../state";
+import EntryDetails from "../EntryDetails/EntryDetails";
 
 const PatientInfo = () => {
-  const [{patients}, dispatch] = useStateValue();
+  const [{patients, diagnoses}, dispatch] = useStateValue();
+
+
+  console.log("patients", patients);
+  console.log("diagnoses", diagnoses);
+  // console.log("ASD-123", diagnoses[patients[0].entries.entries[]]);
+  
 
   const { id } = useParams<{id: string}>()
-
-  console.log("params, ", id);
-  console.log("patients, ", patients);
-  
 
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -23,26 +26,34 @@ const PatientInfo = () => {
           `${apiBaseUrl}/patients/${id}`
         );
           
-        console.log("data", data);
         dispatch(setPatient(data))
-        // dispatch({ type: "SET_PATIENT", payload: data });
       } catch (e) {
         console.error(e);
       }
     };
-    void fetchPatientList();
+      void fetchPatientList();
   }, [dispatch]);
-  // TODO
-  // 1. Click patient's name --> patient's information
-  // 2. 
 
   return (
-    <div>
-      <h1>{patients[id].name}</h1>
-      <p>ssn: {patients[id].ssn} </p>
-      <p>occupation: {patients[id].occupation}</p>
-      <p></p>
-    </div>
+    <>
+      {!patients[id] ? <>...</> : 
+        <div>
+          <h1>{patients[id].name}</h1>
+          <p>ssn: {patients[id].ssn} </p>
+          <p>occupation: {patients[id].occupation}</p>
+
+          <h2>entries</h2>
+
+          {patients[id].entries.map((item) => (
+            <EntryDetails 
+            key={item.id}
+            diagnoses={diagnoses}
+            entry={item}/>
+            
+          ))}
+        </div>
+      }
+    </>
   );
 };
 
