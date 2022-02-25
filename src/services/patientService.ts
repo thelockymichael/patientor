@@ -6,18 +6,21 @@ const getEntries = (): Array<PatientEntry> => {
   return patients
 }
 
+const findById = (id: string): PatientEntry | undefined => {
+  const entry = patients.find(d => d.id === id) 
+
+  return entry
+}
+
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[]  => {
-  return patients.map(({id, name, dateOfBirth, gender, occupation}) => ({
-    id, name, dateOfBirth, gender, occupation
+  
+  
+  return patients.map(({id, name, dateOfBirth, gender, occupation, entries}) => ({
+    id, name, dateOfBirth, gender, occupation, entries
   }))
 }
 
 const addPatient = (entry: NewPatientEntry): PatientEntry => {
-  // const NewPatientEntry = {
-  //   id:  uuid() as any,
-  //   ...entry
-  // }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const id = uuid() 
 
   const newPatientEnry = {
@@ -28,11 +31,10 @@ const addPatient = (entry: NewPatientEntry): PatientEntry => {
   patients.push(newPatientEnry)
 
   return newPatientEnry
-
-  // patients.push(newPatientEnry)
 }
 
 export default {
+  findById,
   getEntries,
   addPatient,
   getNonSensitiveEntries

@@ -5,19 +5,23 @@ import toNewPatientEntry from "../utils/utils"
 const router = express.Router()
 
 router.get("/", (_req, res) => {
+
+  console.log("patientService", patientService.getEntries()[0])
+  
+
+
   res.send(patientService.getNonSensitiveEntries())
 })
 
-/**
- *
- *id: string,
-  name: string,
-  dateOfBirth: string,
-  gender: string,
-  occupation: string,
-  ssn: string
- */
-
+router.get("/:id", (req, res) => {
+  const patient = patientService.findById((req.params.id))
+  
+  if (patient) {
+    res.send(patient)
+  } else {
+    res.sendStatus(404)
+  }
+})
 
 router.post("/", (req, res) => {
   try {
@@ -34,25 +38,6 @@ router.post("/", (req, res) => {
     }
     res.status(400).send(errorMessage)
   }
-  // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // const {name, dateOfBirth, gender, occupation, ssn} = req.body
-
-  // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // const newPatientEnry = patientService.addPatient({
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   name, 
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   dateOfBirth,
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   gender,
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   occupation,
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   ssn
-  // })
-
-
-  // res.send(newPatientEnry)
 })
 
 export default router

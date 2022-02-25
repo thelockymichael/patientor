@@ -10,6 +10,8 @@ const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 const parseDate = (date: unknown): string => {
   if (!date || !isString(date) || !isDate(date)) {
     throw new Error("Incorrect or missing date: " + date)
@@ -40,11 +42,13 @@ const parseOccupation = (occupation: unknown): string => {
 }
 
 const parseGender = (gender: unknown): Gender => {
-  if (!gender || !isString(gender) || !isGender(gender)) {
+  if (!gender || !isString(gender) || !isGender(gender)) {
     throw new Error("Incorrect or missing gender: " + gender)
   }
   return gender
 }
+
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isGender = (param: any): param is Gender => {
@@ -53,28 +57,21 @@ const isGender = (param: any): param is Gender => {
 }
 
 
-/**
- *
- *id: string,
-  name: string,
-  dateOfBirth: string,
-  gender: string,
-  occupation: string,
-  ssn: string
- */
-
 type Fields = { name: unknown, dateOfBirth: unknown,
    gender: unknown, occupation: unknown, ssn: unknown }
 
 const toNewPatientEntry = ({ name, dateOfBirth, gender,
 occupation, ssn }: Fields): NewPatientEntry => {
 
+  
+
   const newEntry: NewPatientEntry = {
     name: parseName(name),
     dateOfBirth: parseDate(dateOfBirth),
     gender: parseGender(gender),
     occupation: parseOccupation(occupation),
-    ssn: parseSsn(ssn)
+    ssn: parseSsn(ssn),
+    entries: []
   }
 
   return newEntry
