@@ -9,7 +9,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "rootDir": "src" /* Specify the root folder within your source files. */,
   },
-  "exclude": ["node_modules", "dist", "__tests__", "frontend"]
+  "exclude": ["node_modules", "dist", "__tests__", "frontend"],
 }
