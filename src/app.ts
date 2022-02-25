@@ -1,5 +1,7 @@
 import express from "express"
 import cors from "cors";
+import diagnoseRoute from "./routes/diagnoses"
+import patientRoute from "./routes/patients"
 
 const app = express()
 
@@ -18,6 +20,9 @@ app.get("/api/ping", (_req, res) => {
   console.log("someone pinged here")
   res.send("pong")
 })
+
+app.use("/api/diagnoses", diagnoseRoute)
+app.use("/api/patients", patientRoute)
 
 
 export default app
