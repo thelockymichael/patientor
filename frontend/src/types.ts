@@ -4,6 +4,8 @@ export interface Diagnosis {
   latin?: string;
 }
 
+
+
 export enum Gender {
   Male = "male",
   Female = "female",
@@ -62,3 +64,17 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry
 
+export enum HospitalEntryType {
+  Hospital = "Hospital",
+  HealthCheck = "HealthCheck",
+  OccupationalHealthcare = "OccupationalHealthcare"
+}
+
+export type HospitalEntryOption = {
+  value: HospitalEntryType;
+  label: string;
+};
+
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never
+// // Define Entry without the 'id' property
+export type EntryWithoutId = UnionOmit<Entry, 'id'>

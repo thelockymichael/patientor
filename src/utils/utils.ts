@@ -92,15 +92,30 @@ const assertNever = (value: never): never => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isDiagnosisCode = (param: any): param is Array<Diagnosis['code']> => {
+ 
+ return [
+    "M24.2", "M51.2", "S03.5", "J10.1", "J06.9", "Z57.1",
+    "N30.0", "H54.7", "J03.0", "L60.1", "Z74.3", "L20",
+    "F43.2", "S62.5", "H35.29", "J12.82"
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  ].some(item => param.includes(item))
+//   console.log("param", param )
+//   function findCommonElements3(arr1, arr2) {
+//     return arr1.some(item => arr2.includes(item))
+// }
+}
+
 const parseDiagnosisCodes = (param: unknown): Array<Diagnosis['code']> => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     // TODO check if param IS array
     // if every property is a string
-    if (!param || !Array.isArray(param)) {
+    if (!param || !Array.isArray(param) || !isDiagnosisCode(param)) {
       throw new Error("Incorrect or missing diagnosis codes.") 
     }
-  
-    return param as Array<Diagnosis['code']>
+
+    return param 
 }
 
 type Fields = { name: unknown, dateOfBirth: unknown,
