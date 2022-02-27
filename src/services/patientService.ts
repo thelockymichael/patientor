@@ -1,5 +1,6 @@
 import patients from "../../data/patients"
-import { NonSensitivePatientEntry, NewPatientEntry, PatientEntry } from "../types"
+import { NonSensitivePatientEntry, EntryWithoutId, 
+  NewPatientEntry, PatientEntry, Entry } from "../types"
 import {v1 as uuid} from 'uuid'
 
 const getEntries = (): Array<PatientEntry> => {
@@ -11,6 +12,8 @@ const findById = (id: string): PatientEntry | undefined => {
 
   return entry
 }
+
+
 
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[]  => {
   
@@ -32,8 +35,32 @@ const addPatient = (entry: NewPatientEntry): PatientEntry => {
   return newPatientEnry
 }
 
+
+// const assertNever = (value: never): never => {
+//   throw new Error(
+//     `Unhandled discriminated union member: ${JSON.stringify(value)}`
+//   )
+// }
+
+const findByIdAndUpdateEntries = (id: string, entry: EntryWithoutId): PatientEntry | undefined => {
+  const entryId = uuid() 
+
+  const patient = patients.find(d => d.id === id) 
+
+  const newEntry: Entry = {
+    id: entryId,
+    ...entry
+  }
+
+  patient?.entries.push(newEntry)
+ 
+  return patient
+}
+
+
 export default {
   findById,
+  findByIdAndUpdateEntries,
   getEntries,
   addPatient,
   getNonSensitiveEntries

@@ -4,30 +4,6 @@ import { Icon } from "semantic-ui-react";
 import { Diagnosis, Entry, HealthCheckEntry } from "../types";
 
 
-/**
- * interface ShowHealthCheckEntry extends BaseEntry {
-  type: "HealthCheck";
-  healthCheckRating: HealthCheckRating;
-}
-
-interface OccupationalHealthcareEntry extends BaseEntry {
-  type: "OccupationalHealthcare",
-  employerName: string,
-  sickLeave?: {
-    startDate: string,
-    endDate: string
-  }
-}
-
-interface HospitalEntry extends BaseEntry {
-  type: "Hospital",
-  discharge: {
-    date: string,
-    criteria: string
-  }
-}
- * 
- */
 
 const parseHealthCheckRating = (healthCheck: number) => {
   let icon = <Icon color="green" size="big" name="heart"></Icon>
@@ -94,19 +70,7 @@ const OccupationalHealthcare: React.FC<{entry: Entry,
     </div>
   )
 }
-/**
- * <div key={item.id}>
-              {item.date} <i>{item.description}</i>
-              <ul>
 
-              {item.diagnosisCodes?.map((item) => 
-              <li key={item}>{item} {diagnoses[item].name}</li>
-                
-              )}
-              </ul>
-
-            </div>
- */
 
 const ShowHealthCheckEntry: React.FC<{entry: HealthCheckEntry, 
   diagnoses:{ [code: string]: Diagnosis; }}> = ({ entry, diagnoses }) => {

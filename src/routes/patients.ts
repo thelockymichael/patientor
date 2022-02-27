@@ -1,6 +1,6 @@
 import express from "express"
 import patientService from "../services/patientService"
-import toNewPatientEntry from "../utils/utils"
+import {toNewEntry, toNewPatientEntry} from "../utils/utils"
 
 const router = express.Router()
 
@@ -26,6 +26,36 @@ router.post("/", (req, res) => {
 
     const addedEntry = patientService.addPatient(newPatientEntry)
     res.json(addedEntry)
+  } catch (error: unknown) {
+    let errorMessage = "Something went wrong."
+
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message
+    }
+    res.status(400).send(errorMessage)
+  }
+})
+
+// TODO Add patient entries
+// POST an entry for a patient
+// d2773336-f723-11e9-8f0b-362b9e155667
+
+router.post("/:id/entries", (req, res) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const newPatientEntry = toNewEntry(req.body)
+
+    const patient = patientService
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    .findByIdAndUpdateEntries(req.params.id, newPatientEntry)
+
+    res.json(patient)
+
+    // TODO 
+    // 1 McClane
+
+      // const addedEntry = patientService.addPatient(newPatientEntry)
+      // res.json(addedEntry)
   } catch (error: unknown) {
     let errorMessage = "Something went wrong."
 

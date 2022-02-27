@@ -10,11 +10,14 @@ export type NonSensitivePatientEntry = Omit<PatientEntry, 'ssn'>
 
 export type NewPatientEntry = Omit<PatientEntry, 'id'>
 
+
 export enum Gender {
   Male = "male",
   Female = "female",
   Other = "other"
 }
+
+
 
 export enum HealthCheckRating {
   "Healthy" = 0,
@@ -44,6 +47,14 @@ interface HospitalEntry extends BaseEntry {
     criteria: string
   }
 }
+
+
+export enum HospitalTypes {
+  OccupationalHealthcare = "OccupationalHealthcare",
+  HealthCheck = "HealthCheck",
+  HospitalEntry = "Hospital"
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BaseEntry {
   id: string;
@@ -53,13 +64,15 @@ export interface BaseEntry {
   diagnosisCodes?: Array<Diagnosis['code']>;}
 
 
+
 export type Entry =
   | HospitalEntry
   | OccupationalHealthcareEntry
   | HealthCheckEntry
 
-
-
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never
+// // Define Entry without the 'id' property
+export type EntryWithoutId = UnionOmit<Entry, 'id'>
 
 // TODO
 // * define occupationalHealthcareEntru 
